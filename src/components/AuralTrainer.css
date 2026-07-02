@@ -324,11 +324,12 @@
 }
 
 .gradeButton--active {
-  color: var(--bg-0);
+  color: #ffffff;
   font-weight: 800;
-  background: linear-gradient(90deg, var(--cyan), var(--lime));
+  background: linear-gradient(90deg, var(--magenta), #7a2bff);
   border-color: transparent;
-  box-shadow: 0 0 26px rgba(38, 230, 255, 0.5);
+  box-shadow: 0 0 26px rgba(255, 45, 149, 0.5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
 }
 
 .gradeButton--active:hover {
@@ -1129,6 +1130,9 @@
   .gradeButton {
     justify-content: space-between;
     border-radius: var(--radius-sm);
+  }
+
+  .gradeButton:not(.gradeButton--active) {
     background: transparent;
     border-color: transparent;
   }

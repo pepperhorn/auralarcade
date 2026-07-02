@@ -375,10 +375,16 @@ function frequencyToMidi(freq: number) {
 async function getAudioKit(): Promise<AudioKit> {
   if (!audioKitPromise) {
     audioKitPromise = (async () => {
-      const { DrumMachine, SplendidGrandPiano } = await import("smplr");
+      const { DrumMachine, Soundfont } = await import("smplr");
       const AudioContextCtor = window.AudioContext || (window as any).webkitAudioContext;
       const context = new AudioContextCtor();
-      const piano = SplendidGrandPiano(context, { volume: 96, decayTime: 0.7 });
+      // FluidR3_GM acoustic grand loads as a single soundfont file (~hundreds of KB)
+      // instead of SplendidGrandPiano's ~20MB / 340+ individual sample requests.
+      const piano = Soundfont(context, {
+        instrument: "acoustic_grand_piano",
+        kit: "FluidR3_GM",
+        volume: 96
+      });
       const drums = DrumMachine(context, { instrument: "TR-808", volume: 78 });
       await Promise.allSettled([piano.ready, drums.ready]);
       return { context, piano, drums };
