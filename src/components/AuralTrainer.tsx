@@ -127,6 +127,9 @@ const optionDefinitions: Record<string, string> = {
   Octave: "The same note name eight scale degrees higher.",
   "Minor sixth": "Eight semitones above the keynote.",
   "Minor seventh": "Ten semitones above the keynote.",
+  "Minor third": "Three semitones above the keynote; a narrower third.",
+  "Perfect fourth": "Five semitones above the keynote, such as C up to F.",
+  "Major seventh": "Eleven semitones above the keynote; one semitone below the octave.",
   "Duple time": "Beats grouped in twos, with a strong beat then a weaker beat.",
   "Triple time": "Beats grouped in threes, with one strong beat followed by two weaker beats.",
   "Simple quadruple": "Four beats in a bar, commonly felt as strong, weak, medium, weak.",
@@ -356,9 +359,127 @@ const generatedRhythmExercises: Exercise[] = (rhythmBank.examples as RhythmBankE
   correct: example.correct
 }));
 
+// Canonical interval name per semitone distance above the keynote. Deriving the
+// answer from the semitone count guarantees the label matches the notes that
+// actually sound, so an interval drill can never be mislabelled.
+const intervalBySemitone: Record<number, string> = {
+  1: "Minor second",
+  2: "Major second",
+  3: "Minor third",
+  4: "Major third",
+  5: "Perfect fourth",
+  7: "Perfect fifth",
+  8: "Minor sixth",
+  9: "Major sixth",
+  10: "Minor seventh",
+  11: "Major seventh",
+  12: "Octave"
+};
+
+// Scale-step naming used at Grade 3 (distances within a major scale up to a fifth).
+const scaleStepBySemitone: Record<number, string> = {
+  2: "Second",
+  4: "Third",
+  5: "Fourth",
+  7: "Fifth"
+};
+
+let intervalExerciseCount = 0;
+
+function namedInterval(grade: Grade, root: number, semitones: number, options: string[], title: string): Exercise {
+  intervalExerciseCount += 1;
+  return {
+    id: `iv-${intervalExerciseCount}`,
+    grade,
+    kind: "interval",
+    title,
+    prompt: "Listen to the two notes, then name the interval above the keynote.",
+    answerMode: "choice",
+    notes: [root, root + semitones],
+    options,
+    correct: intervalBySemitone[semitones]
+  };
+}
+
+function scaleStepInterval(grade: Grade, root: number, semitones: number, title: string): Exercise {
+  intervalExerciseCount += 1;
+  return {
+    id: `iv-${intervalExerciseCount}`,
+    grade,
+    kind: "interval",
+    title,
+    prompt: "Listen to the two notes, then name the scale distance from the keynote.",
+    answerMode: "choice",
+    notes: [root, root + semitones],
+    options: ["Second", "Third", "Fourth", "Fifth"],
+    correct: scaleStepBySemitone[semitones]
+  };
+}
+
+function higherLower(grade: Grade, notes: number[], correct: "First note" | "Second note", title: string): Exercise {
+  intervalExerciseCount += 1;
+  return {
+    id: `iv-${intervalExerciseCount}`,
+    grade,
+    kind: "interval",
+    title,
+    prompt: "Which note was higher?",
+    answerMode: "choice",
+    notes,
+    options: ["First note", "Second note", "Same note", "Cannot tell"],
+    correct
+  };
+}
+
+const majorSet = ["Major second", "Major third", "Perfect fourth", "Perfect fifth"];
+const upperSet = ["Perfect fifth", "Major sixth", "Major seventh", "Octave"];
+
+const intervalExercises: Exercise[] = [
+  // Preliminary & Grade 2 — higher / lower of two notes (per spec, not named intervals)
+  higherLower("Preliminary", [60, 64], "Second note", "Higher Or Lower"),
+  higherLower("Preliminary", [67, 60], "First note", "Higher Or Lower"),
+  higherLower("Grade 2", [60, 67], "Second note", "Top Note Hunt"),
+  higherLower("Grade 2", [67, 62], "First note", "Top Note Hunt"),
+
+  // Grade 3 — scale distances up to a fifth
+  scaleStepInterval("Grade 3", 60, 2, "Scale Leap"),
+  scaleStepInterval("Grade 3", 60, 4, "Scale Leap"),
+  scaleStepInterval("Grade 3", 60, 5, "Scale Leap"),
+  scaleStepInterval("Grade 3", 60, 7, "Scale Leap"),
+  scaleStepInterval("Grade 3", 55, 4, "Scale Leap"),
+  scaleStepInterval("Grade 3", 65, 7, "Scale Leap"),
+
+  // Grade 4 — intervals of a major scale
+  namedInterval("Grade 4", 60, 2, majorSet, "Interval Radar"),
+  namedInterval("Grade 4", 60, 4, majorSet, "Interval Radar"),
+  namedInterval("Grade 4", 60, 5, ["Major third", "Perfect fourth", "Perfect fifth", "Major sixth"], "Interval Radar"),
+  namedInterval("Grade 4", 60, 7, ["Perfect fourth", "Perfect fifth", "Major sixth", "Octave"], "Interval Radar"),
+  namedInterval("Grade 4", 60, 9, upperSet, "Interval Radar"),
+  namedInterval("Grade 4", 60, 11, ["Major sixth", "Major seventh", "Octave", "Perfect fifth"], "Interval Radar"),
+  namedInterval("Grade 4", 60, 12, ["Major sixth", "Major seventh", "Octave", "Perfect fifth"], "Interval Radar"),
+
+  // Grade 5 — major-scale intervals from varied keynotes
+  namedInterval("Grade 5", 55, 4, majorSet, "Pitch Gap"),
+  namedInterval("Grade 5", 57, 5, ["Major third", "Perfect fourth", "Perfect fifth", "Major sixth"], "Pitch Gap"),
+  namedInterval("Grade 5", 65, 7, ["Perfect fourth", "Perfect fifth", "Major sixth", "Octave"], "Pitch Gap"),
+  namedInterval("Grade 5", 62, 9, upperSet, "Pitch Gap"),
+  namedInterval("Grade 5", 60, 11, ["Major sixth", "Major seventh", "Octave", "Perfect fifth"], "Pitch Gap"),
+  namedInterval("Grade 5", 64, 12, ["Major sixth", "Major seventh", "Octave", "Perfect fifth"], "Pitch Gap"),
+
+  // Grade 6 — major and harmonic-minor intervals (adds minor 3rd/6th/7th)
+  namedInterval("Grade 6", 60, 3, ["Major second", "Minor third", "Major third", "Perfect fourth"], "Minor Signal"),
+  namedInterval("Grade 6", 60, 4, ["Minor third", "Major third", "Perfect fourth", "Perfect fifth"], "Minor Signal"),
+  namedInterval("Grade 6", 60, 8, ["Perfect fifth", "Minor sixth", "Major sixth", "Minor seventh"], "Minor Signal"),
+  namedInterval("Grade 6", 60, 9, ["Minor sixth", "Major sixth", "Minor seventh", "Major seventh"], "Minor Signal"),
+  namedInterval("Grade 6", 60, 10, ["Major sixth", "Minor seventh", "Major seventh", "Octave"], "Minor Signal"),
+  namedInterval("Grade 6", 60, 11, ["Minor seventh", "Major seventh", "Octave", "Minor sixth"], "Minor Signal"),
+  namedInterval("Grade 6", 57, 3, ["Major second", "Minor third", "Major third", "Perfect fourth"], "Minor Signal")
+];
+
 const exercises: Exercise[] = [
   ...generatedRhythmExercises,
-  ...coreExercises.filter((exercise) => exercise.kind !== "rhythm")
+  ...coreExercises.filter((exercise) => exercise.kind !== "rhythm"),
+  ...intervalExercises
 ];
 
 let audioKitPromise: Promise<AudioKit> | null = null;
@@ -529,13 +650,33 @@ function scoreForLevel(points: number) {
   return Math.max(1, Math.floor(points / 120) + 1);
 }
 
-function randomExerciseIndex(length: number, previousIndex?: number) {
-  if (length <= 1) return 0;
-  let nextIndex = Math.floor(Math.random() * length);
-  if (previousIndex !== undefined && nextIndex === previousIndex) {
-    nextIndex = (nextIndex + 1 + Math.floor(Math.random() * (length - 1))) % length;
+// Balance selection across exercise kinds. The generated rhythm bank has ~50
+// entries per grade while pitch/interval/harmony each have only 1-2, so a flat
+// random pick almost always lands on rhythm. Pick a kind first (avoiding the
+// previous one when possible), then a random exercise within that kind.
+function pickBalancedIndex(list: Exercise[], previousIndex?: number) {
+  if (list.length <= 1) return 0;
+
+  const byKind = new Map<ExerciseKind, number[]>();
+  list.forEach((exercise, index) => {
+    const bucket = byKind.get(exercise.kind);
+    if (bucket) bucket.push(index);
+    else byKind.set(exercise.kind, [index]);
+  });
+
+  const kinds = Array.from(byKind.keys());
+  const previousKind = previousIndex !== undefined ? list[previousIndex]?.kind : undefined;
+  const candidateKinds =
+    kinds.length > 1 && previousKind ? kinds.filter((kind) => kind !== previousKind) : kinds;
+  const kindPool = candidateKinds.length ? candidateKinds : kinds;
+
+  const kind = kindPool[Math.floor(Math.random() * kindPool.length)];
+  const indices = byKind.get(kind) ?? [];
+  let index = indices[Math.floor(Math.random() * indices.length)];
+  if (index === previousIndex && indices.length > 1) {
+    index = indices[(indices.indexOf(index) + 1) % indices.length];
   }
-  return nextIndex;
+  return index;
 }
 
 export default function AuralTrainer() {
@@ -576,8 +717,8 @@ export default function AuralTrainer() {
   const progress = Math.min(100, points % 120 === 0 ? 100 : ((points % 120) / 120) * 100);
 
   useEffect(() => {
-    setExerciseIndex((previousIndex) => randomExerciseIndex(gradeExercises.length, previousIndex));
-  }, [grade, gradeExercises.length]);
+    setExerciseIndex((previousIndex) => pickBalancedIndex(gradeExercises, previousIndex));
+  }, [grade, gradeExercises]);
 
   useEffect(() => {
     if (!audioKitPromise) return;
@@ -651,8 +792,8 @@ export default function AuralTrainer() {
     rhythmEventTimersRef.current.forEach((timer) => window.clearTimeout(timer));
     rhythmEventTimersRef.current = [];
     setIsPlayingExample(false);
-    const nextGradeCount = exercises.filter((exercise) => exercise.grade === nextGrade).length;
-    setExerciseIndex((previousIndex) => randomExerciseIndex(nextGradeCount, previousIndex));
+    const nextGradeExercises = exercises.filter((exercise) => exercise.grade === nextGrade);
+    setExerciseIndex((previousIndex) => pickBalancedIndex(nextGradeExercises, previousIndex));
     clearAnswerState();
     setStatus("Fresh random example loaded. Press play when ready.");
   }
