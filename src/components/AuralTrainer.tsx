@@ -650,18 +650,30 @@ function scoreForLevel(points: number) {
   return Math.max(1, Math.floor(points / 120) + 1);
 }
 
-// Balance selection across exercise kinds. The generated rhythm bank has ~50
-// entries per grade while pitch/interval/harmony each have only 1-2, so a flat
-// random pick almost always lands on rhythm. Pick a kind first (avoiding the
-// previous one when possible), then a random exercise within that kind.
-function pickBalancedIndex(list: Exercise[], previousIndex?: number) {
-  if (list.length <= 1) return 0;
+// Target share of questions that should be rhythm drills, the rest being pitched
+// "tone" drills (interval, melody, harmony, cadence, memory). 0.5 = an even
+// rhythm/tone split. Tune this single number to shift the balance either way.
+const RHYTHM_SHARE = 0.5;
+
+const rhythmKinds: ExerciseKind[] = ["rhythm"];
+
+function isRhythmExercise(exercise: Exercise) {
+  return rhythmKinds.includes(exercise.kind);
+}
+
+// Pick an index from a pool, balanced across the exercise kinds within it and
+// avoiding an immediate exact repeat. The generated rhythm bank has ~50 entries
+// per grade vs 1-2 per pitched kind, so we balance by kind rather than flat
+// random (which would almost always land on the same crowded kind).
+function pickWithinPool(list: Exercise[], indices: number[], previousIndex?: number) {
+  if (indices.length === 0) return 0;
+  if (indices.length === 1) return indices[0];
 
   const byKind = new Map<ExerciseKind, number[]>();
-  list.forEach((exercise, index) => {
-    const bucket = byKind.get(exercise.kind);
+  indices.forEach((index) => {
+    const bucket = byKind.get(list[index].kind);
     if (bucket) bucket.push(index);
-    else byKind.set(exercise.kind, [index]);
+    else byKind.set(list[index].kind, [index]);
   });
 
   const kinds = Array.from(byKind.keys());
@@ -671,12 +683,38 @@ function pickBalancedIndex(list: Exercise[], previousIndex?: number) {
   const kindPool = candidateKinds.length ? candidateKinds : kinds;
 
   const kind = kindPool[Math.floor(Math.random() * kindPool.length)];
-  const indices = byKind.get(kind) ?? [];
-  let index = indices[Math.floor(Math.random() * indices.length)];
-  if (index === previousIndex && indices.length > 1) {
-    index = indices[(indices.indexOf(index) + 1) % indices.length];
+  const pool = byKind.get(kind) ?? [];
+  let index = pool[Math.floor(Math.random() * pool.length)];
+  if (index === previousIndex && pool.length > 1) {
+    index = pool[(pool.indexOf(index) + 1) % pool.length];
   }
   return index;
+}
+
+// The rhythm/tone balancer. Split the pool into rhythm vs tone families, choose
+// a family with a weighted coin biased by RHYTHM_SHARE (re-rolled once if it
+// would repeat the previous family, to avoid long single-family runs), then
+// balance across kinds inside that family.
+function pickBalancedIndex(list: Exercise[], previousIndex?: number) {
+  if (list.length <= 1) return 0;
+
+  const rhythmIndices: number[] = [];
+  const toneIndices: number[] = [];
+  list.forEach((exercise, index) => {
+    (isRhythmExercise(exercise) ? rhythmIndices : toneIndices).push(index);
+  });
+
+  if (rhythmIndices.length === 0) return pickWithinPool(list, toneIndices, previousIndex);
+  if (toneIndices.length === 0) return pickWithinPool(list, rhythmIndices, previousIndex);
+
+  const previousWasRhythm =
+    previousIndex !== undefined && list[previousIndex] ? isRhythmExercise(list[previousIndex]) : false;
+  let wantRhythm = Math.random() < RHYTHM_SHARE;
+  if (wantRhythm === previousWasRhythm) {
+    wantRhythm = Math.random() < RHYTHM_SHARE;
+  }
+
+  return pickWithinPool(list, wantRhythm ? rhythmIndices : toneIndices, previousIndex);
 }
 
 export default function AuralTrainer() {
