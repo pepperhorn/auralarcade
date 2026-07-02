@@ -1,0 +1,1058 @@
+.shell {
+  width: min(1420px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 56px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------ *
+ * HERO / MARQUEE
+ * ------------------------------------------------------------------ */
+.hero {
+  min-height: 30vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 28px;
+  align-items: end;
+  padding: 28px 0 20px;
+}
+
+.hero__copy {
+  animation: riseIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  color: var(--bg-0);
+  background: linear-gradient(90deg, var(--magenta), var(--orange));
+  padding: 7px 14px 6px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 0 24px rgba(255, 45, 149, 0.5);
+  animation: flicker 6s infinite;
+}
+
+.eyebrow,
+.tag,
+.requirement,
+.status,
+.mission__header {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero__copy h1 {
+  max-width: 900px;
+  margin: 18px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.6vw, 4.4rem);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-shadow:
+    0 0 10px rgba(38, 230, 255, 0.35),
+    0 0 34px rgba(255, 45, 149, 0.35);
+}
+
+/* ------------------------------------------------------------------ *
+ * SCOREBOARD (arcade HUD)
+ * ------------------------------------------------------------------ */
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(38, 20, 66, 0.9), rgba(16, 8, 34, 0.92));
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(120, 60, 255, 0.18);
+  animation: riseIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: 80ms;
+}
+
+.scoreboard div:not(.meter) {
+  min-height: 82px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 12px;
+  text-align: center;
+  background: rgba(8, 4, 15, 0.55);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.scoreboard span {
+  color: var(--muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.scoreboard strong {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--cyan);
+  text-shadow: 0 0 16px rgba(38, 230, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+/* colour-code the three tiles */
+.scoreboard div:not(.meter):nth-child(1) strong {
+  color: var(--yellow);
+  text-shadow: 0 0 16px rgba(255, 210, 63, 0.6);
+}
+.scoreboard div:not(.meter):nth-child(3) strong {
+  color: var(--magenta);
+  text-shadow: 0 0 16px rgba(255, 45, 149, 0.7);
+}
+
+.meter {
+  grid-column: 1 / -1;
+  height: 12px;
+  overflow: hidden;
+  background: rgba(8, 4, 15, 0.7);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  position: relative;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan), var(--lime), var(--yellow), var(--magenta));
+  background-size: 200% 100%;
+  box-shadow: 0 0 18px rgba(182, 255, 61, 0.6);
+  transition: width 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: meterFlow 3s linear infinite;
+}
+
+/* ------------------------------------------------------------------ *
+ * AUDIO GATE ("INSERT COIN")
+ * ------------------------------------------------------------------ */
+.audioGate {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(circle at 50% 40%, rgba(30, 12, 60, 0.6), rgba(6, 3, 12, 0.92));
+  backdrop-filter: blur(14px);
+  animation: fadeIn 300ms ease both;
+}
+
+.audioGate__panel {
+  width: min(100%, 480px);
+  padding: 32px 28px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(38, 20, 66, 0.95), rgba(14, 7, 30, 0.97));
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(255, 45, 149, 0.25);
+  animation: popIn 500ms cubic-bezier(0.2, 0.9, 0.2, 1.2) both;
+}
+
+.audioGate__panel .eyebrow {
+  animation: flicker 3s infinite;
+}
+
+.audioGate__panel h2 {
+  margin: 16px 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  line-height: 1.05;
+  color: var(--ink);
+  text-shadow: 0 0 24px rgba(38, 230, 255, 0.4);
+}
+
+.audioGate__panel p {
+  margin: 0 auto 24px;
+  max-width: 34ch;
+  color: var(--muted);
+}
+
+.audioGate__button {
+  width: 100%;
+  min-height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  animation: pulseGlow 1.8s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------ *
+ * LAYOUT
+ * ------------------------------------------------------------------ */
+.layout {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr) 290px;
+  gap: 18px;
+  align-items: start;
+}
+
+.gradeRail,
+.trainer,
+.mission {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  animation: riseIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.gradeRail {
+  animation-delay: 140ms;
+}
+.trainer {
+  animation-delay: 200ms;
+}
+.mission {
+  animation-delay: 260ms;
+}
+
+/* ------------------------------------------------------------------ *
+ * GRADE RAIL (level select)
+ * ------------------------------------------------------------------ */
+.gradeRail {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  position: sticky;
+  top: 16px;
+}
+
+.gradeButton {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 14px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-weight: 600;
+  transition: all 160ms ease;
+}
+
+.gradeButton:hover {
+  color: var(--ink);
+  background: var(--panel-2);
+  border-color: var(--line);
+  transform: translateX(3px);
+}
+
+.gradeButton--active {
+  color: var(--bg-0);
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--cyan), var(--lime));
+  border-color: transparent;
+  box-shadow: 0 0 26px rgba(38, 230, 255, 0.5);
+}
+
+.gradeButton--active:hover {
+  transform: none;
+  color: var(--bg-0);
+}
+
+/* ------------------------------------------------------------------ *
+ * TRAINER (main stage)
+ * ------------------------------------------------------------------ */
+.trainer {
+  min-height: 620px;
+  padding: 26px;
+}
+
+.trainer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px;
+  gap: 18px;
+  align-items: start;
+}
+
+.tag {
+  font-family: var(--font-display);
+  color: var(--lime);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1px solid rgba(182, 255, 61, 0.4);
+  border-radius: 999px;
+  background: rgba(182, 255, 61, 0.08);
+  text-shadow: 0 0 12px rgba(182, 255, 61, 0.5);
+}
+
+.trainer h2 {
+  margin: 14px 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2.7rem);
+  line-height: 1.02;
+  color: var(--ink);
+}
+
+.trainer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.5;
+}
+
+.iconButton {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: var(--bg-0);
+  background: radial-gradient(circle at 35% 30%, #fff3, transparent 60%), var(--magenta);
+  box-shadow: 0 0 30px rgba(255, 45, 149, 0.6);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.iconButton:hover:not(:disabled) {
+  transform: scale(1.08);
+  box-shadow: 0 0 44px rgba(255, 45, 149, 0.9);
+}
+
+.iconButton:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.iconButton:disabled,
+.actions button:disabled {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+.requirement {
+  width: 100%;
+  margin: 22px 0;
+  padding: 14px 16px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius-sm);
+  font-size: 0.94rem;
+}
+
+.requirement svg {
+  color: var(--cyan);
+  flex: 0 0 auto;
+}
+
+/* ------------------------------------------------------------------ *
+ * CONTROLS
+ * ------------------------------------------------------------------ */
+.volumeControl {
+  display: grid;
+  grid-template-columns: auto minmax(160px, 1fr) 52px;
+  align-items: center;
+  gap: 12px;
+  margin: -4px 0 20px;
+  color: var(--muted);
+}
+
+.volumeControl span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.volumeControl input {
+  width: 100%;
+  accent-color: var(--cyan);
+}
+
+.volumeControl strong {
+  text-align: right;
+  font-family: var(--font-mono);
+  color: var(--yellow);
+}
+
+.toneControl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: -4px 0 20px;
+}
+
+.toneControl > span {
+  margin-right: 4px;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+
+.toneButton {
+  min-height: 38px;
+  padding: 0 14px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 140ms ease;
+}
+
+.toneButton:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.toneButton--active {
+  color: var(--bg-0);
+  background: var(--yellow);
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(255, 210, 63, 0.55);
+}
+
+.toneButton--active:hover {
+  color: var(--bg-0);
+}
+
+.memoryStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 60px;
+  padding: 0 16px;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, rgba(38, 230, 255, 0.12), rgba(255, 45, 149, 0.12));
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.memoryStrip button {
+  min-height: 38px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-body);
+  letter-spacing: 0;
+}
+
+/* shared button base */
+.tapActions button,
+.actions button,
+.notePad button,
+.modeSwitch button {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: all 150ms ease;
+}
+
+.notePad button:hover,
+.modeSwitch button:hover,
+.actions button:hover:not(:disabled),
+.tapActions button:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+/* ------------------------------------------------------------------ *
+ * CHOICES
+ * ------------------------------------------------------------------ */
+.choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.choice {
+  min-height: 74px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-weight: 600;
+  transition: all 150ms ease;
+  overflow: visible;
+}
+
+.choice::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, var(--magenta-soft), var(--cyan-soft));
+  opacity: 0;
+  transition: opacity 150ms ease;
+  pointer-events: none;
+}
+
+.choice:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+}
+
+.choice:hover::before {
+  opacity: 1;
+}
+
+.choice--selected {
+  border-color: var(--cyan);
+  box-shadow: 0 0 24px rgba(38, 230, 255, 0.45), inset 0 0 0 1px var(--cyan);
+}
+
+.choice--selected::before {
+  opacity: 1;
+}
+
+.choice > span:first-child {
+  position: relative;
+  z-index: 1;
+}
+
+.optionInfo {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--bg-0);
+  background: var(--yellow);
+  border-radius: 999px;
+}
+
+.optionTooltip,
+.tooltipText {
+  position: absolute;
+  width: min(280px, 72vw);
+  padding: 11px 13px;
+  color: var(--ink);
+  background: rgba(10, 5, 20, 0.98);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  font-size: 0.86rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease, transform 150ms ease;
+  z-index: 30;
+}
+
+.optionTooltip {
+  right: 0;
+  bottom: calc(100% + 10px);
+  transform: translateY(4px);
+}
+
+.choice:hover .optionTooltip,
+.choice:focus-visible .optionTooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ------------------------------------------------------------------ *
+ * RESPONSE / MIC / NOTEPAD
+ * ------------------------------------------------------------------ */
+.responseBox,
+.rhythmPad {
+  display: grid;
+  gap: 16px;
+  margin: 22px 0;
+}
+
+.answerHint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+}
+
+.tooltipIcon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--bg-0);
+  background: var(--yellow);
+  border: 0;
+  border-radius: 999px;
+}
+
+.tooltipText {
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translate(-50%, 4px);
+}
+
+.tooltipIcon:hover .tooltipText,
+.tooltipIcon:focus-visible .tooltipText {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.modeSwitch {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(110px, 1fr));
+  width: min(100%, 340px);
+  gap: 6px;
+  padding: 6px;
+  background: rgba(8, 4, 15, 0.5);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.modeSwitch button {
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  color: var(--muted);
+  min-height: 42px;
+}
+
+.modeSwitch button.active {
+  color: var(--bg-0);
+  background: linear-gradient(90deg, var(--cyan), var(--lime));
+  box-shadow: 0 0 20px rgba(38, 230, 255, 0.5);
+}
+
+.micPanel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  min-height: 78px;
+  padding: 16px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.micPanel > span {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(38, 230, 255, 0.4);
+}
+
+.notePad {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 10px;
+}
+
+.notePad button {
+  min-height: 64px;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.notePad button:hover {
+  color: var(--bg-0);
+  background: var(--lime);
+  border-color: transparent;
+}
+
+/* ------------------------------------------------------------------ *
+ * RHYTHM TAP PAD (the fun centerpiece)
+ * ------------------------------------------------------------------ */
+.tapTarget {
+  min-height: 190px;
+  position: relative;
+  color: var(--bg-0);
+  background: radial-gradient(circle at 50% 40%, #ffcaa8, var(--orange) 55%, #e0602f);
+  border: 0;
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  letter-spacing: 0.05em;
+  box-shadow:
+    0 0 44px rgba(255, 138, 61, 0.5),
+    inset 0 -8px 20px rgba(0, 0, 0, 0.2),
+    inset 0 4px 12px rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+  transition: transform 80ms ease;
+}
+
+.tapTarget::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6), transparent 60%);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.tapTarget:active {
+  transform: scale(0.97);
+}
+
+.tapTarget:active::after {
+  opacity: 1;
+  transition: opacity 0ms;
+}
+
+.tapActions,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.actions {
+  margin-top: 4px;
+}
+
+/* ------------------------------------------------------------------ *
+ * PRIMARY / PLAY / GO-ON BUTTONS
+ * ------------------------------------------------------------------ */
+.primary {
+  color: var(--bg-0) !important;
+  background: linear-gradient(90deg, var(--yellow), var(--orange)) !important;
+  border-color: transparent !important;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 24px rgba(255, 210, 63, 0.4);
+}
+
+.actions .playExample {
+  color: var(--bg-0);
+  background: linear-gradient(90deg, var(--cyan), var(--lime));
+  border-color: transparent;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  box-shadow: 0 0 26px rgba(38, 230, 255, 0.45);
+}
+
+.actions .playExample:hover:not(:disabled) {
+  box-shadow: 0 0 40px rgba(38, 230, 255, 0.7);
+}
+
+.actions .goOnButton {
+  color: var(--ink);
+  background: linear-gradient(90deg, var(--magenta), #b23bff);
+  border-color: transparent;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  box-shadow: 0 0 26px rgba(255, 45, 149, 0.5);
+  animation: pulseGlow 1.6s ease-in-out infinite;
+}
+
+/* ------------------------------------------------------------------ *
+ * STATUS BAR (feedback)
+ * ------------------------------------------------------------------ */
+.status {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.status svg {
+  flex: 0 0 auto;
+  color: var(--cyan);
+}
+
+.status--correct {
+  border-color: var(--lime);
+  border-left-color: var(--lime);
+  background: rgba(182, 255, 61, 0.12);
+  animation: answerCorrect 720ms ease both;
+}
+
+.status--correct svg {
+  color: var(--lime);
+}
+
+.status--incorrect {
+  border-color: var(--magenta);
+  border-left-color: var(--magenta);
+  background: rgba(255, 45, 149, 0.14);
+  animation: answerIncorrect 520ms ease both;
+}
+
+.status--incorrect svg {
+  color: var(--magenta);
+}
+
+/* full-screen neon burst on a correct answer */
+.status--correct::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 55%, rgba(182, 255, 61, 0.28), transparent 45%);
+  animation: screenFlash 620ms ease-out forwards;
+}
+
+/* ------------------------------------------------------------------ *
+ * MISSION PANEL
+ * ------------------------------------------------------------------ */
+.mission {
+  padding: 20px;
+  position: sticky;
+  top: 16px;
+}
+
+.mission__header {
+  color: var(--yellow);
+}
+
+.mission__header svg {
+  filter: drop-shadow(0 0 10px rgba(255, 210, 63, 0.6));
+}
+
+.mission h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.mission ul {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0 0;
+  padding-left: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.mission li {
+  position: relative;
+  padding-left: 26px;
+}
+
+.mission li::before {
+  content: "▸";
+  position: absolute;
+  left: 4px;
+  top: 0;
+  color: var(--lime);
+  font-weight: 900;
+}
+
+/* ------------------------------------------------------------------ *
+ * KEYFRAMES
+ * ------------------------------------------------------------------ */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 24px rgba(255, 45, 149, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 44px rgba(255, 45, 149, 0.85);
+  }
+}
+
+@keyframes meterFlow {
+  from { background-position: 0% 50%; }
+  to { background-position: 200% 50%; }
+}
+
+@keyframes flicker {
+  0%, 92%, 100% { opacity: 1; }
+  93% { opacity: 0.6; }
+  94% { opacity: 1; }
+  96% { opacity: 0.75; }
+  97% { opacity: 1; }
+}
+
+@keyframes screenFlash {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes answerCorrect {
+  0% {
+    transform: scale(0.99);
+  }
+  40% {
+    transform: scale(1.015);
+    box-shadow: 0 0 0 8px rgba(182, 255, 61, 0.18);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(182, 255, 61, 0);
+  }
+}
+
+@keyframes answerIncorrect {
+  0%, 100% { transform: translateX(0); }
+  22% { transform: translateX(-7px); }
+  44% { transform: translateX(7px); }
+  66% { transform: translateX(-4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__copy,
+  .scoreboard,
+  .gradeRail,
+  .trainer,
+  .mission,
+  .audioGate,
+  .audioGate__panel {
+    animation: none;
+  }
+  .eyebrow,
+  .audioGate__button,
+  .goOnButton,
+  .meter span {
+    animation: none;
+  }
+  .status--correct,
+  .status--incorrect {
+    animation: none;
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
+  .status--correct::after {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * RESPONSIVE
+ * ------------------------------------------------------------------ */
+@media (max-width: 1080px) {
+  .hero,
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .gradeRail,
+  .mission {
+    position: static;
+  }
+
+  .gradeRail {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .shell {
+    width: min(100% - 20px, 1420px);
+    padding-top: 12px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 10px;
+  }
+
+  .scoreboard {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .scoreboard .meter {
+    grid-column: 1 / -1;
+  }
+
+  .trainer {
+    padding: 18px;
+  }
+
+  .trainer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .iconButton {
+    width: 100%;
+    border-radius: var(--radius-sm);
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "aural-arcade",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro check && astro build",
+    "generate:rhythms": "node scripts/generate-rhythm-bank.mjs",
+    "preview": "astro preview --host 0.0.0.0",
+    "check": "astro check",
+    "validate:rhythms": "node scripts/validate-rhythm-bank.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "6.0.0",
+    "astro": "6.4.8",
+    "lucide-react": "1.23.0",
+    "pitchy": "4.1.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "recordrtc": "^5.6.2",
+    "smplr": "1.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@400;500;600;700;800;900&family=Chivo+Mono:wght@600;700;800&display=swap');
+
+:root {
+  color-scheme: dark;
+
+  /* Arcade neon palette */
+  --bg-0: #08040f;
+  --bg-1: #120826;
+  --bg-2: #1b0b3a;
+  --ink: #f7f2ff;
+  --muted: #b6a4dc;
+  --muted-dim: #8a7bb0;
+
+  --magenta: #ff2d95;
+  --magenta-soft: rgba(255, 45, 149, 0.16);
+  --cyan: #26e6ff;
+  --cyan-soft: rgba(38, 230, 255, 0.14);
+  --lime: #b6ff3d;
+  --orange: #ff8a3d;
+  --yellow: #ffd23f;
+
+  --panel: rgba(24, 12, 46, 0.66);
+  --panel-2: rgba(38, 20, 66, 0.5);
+  --line: rgba(160, 120, 255, 0.22);
+  --line-strong: rgba(190, 150, 255, 0.4);
+
+  --radius: 18px;
+  --radius-sm: 12px;
+
+  --font-body: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bungee', 'Poppins', sans-serif;
+  --font-mono: 'Chivo Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  font-family: var(--font-body);
+  background: var(--bg-0);
+  color: var(--ink);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  position: relative;
+  overflow-x: hidden;
+  background:
+    radial-gradient(120% 80% at 15% -10%, rgba(255, 45, 149, 0.22), transparent 55%),
+    radial-gradient(120% 90% at 90% 0%, rgba(38, 230, 255, 0.18), transparent 52%),
+    radial-gradient(140% 120% at 50% 120%, rgba(120, 60, 255, 0.24), transparent 60%),
+    linear-gradient(160deg, var(--bg-1) 0%, var(--bg-0) 45%, #0b0518 100%);
+  background-attachment: fixed;
+}
+
+/* Slow-drifting neon aurora */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -30% -10%;
+  z-index: -2;
+  background:
+    radial-gradient(40% 40% at 20% 30%, rgba(255, 45, 149, 0.16), transparent 70%),
+    radial-gradient(45% 45% at 80% 70%, rgba(38, 230, 255, 0.14), transparent 70%),
+    radial-gradient(35% 35% at 60% 20%, rgba(182, 255, 61, 0.08), transparent 70%);
+  filter: blur(40px);
+  animation: auroraDrift 26s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* CRT scanlines + fine grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+
+@keyframes auroraDrift {
+  0% {
+    transform: translate3d(-4%, -2%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(4%, 3%, 0) scale(1.15);
+  }
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
