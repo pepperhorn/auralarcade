@@ -11,6 +11,9 @@
     "check": "astro check",
     "validate:rhythms": "node scripts/validate-rhythm-bank.mjs"
   },
+  "overrides": {
+    "vite": "^7"
+  },
   "dependencies": {
     "@astrojs/react": "6.0.0",
     "astro": "6.4.8",
