@@ -3,5 +3,6 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   integrations: [react()],
-  output: "static"
+  output: "static",
+  devToolbar: { enabled: false }
 });

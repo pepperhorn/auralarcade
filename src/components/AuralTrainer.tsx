@@ -1,6 +1,7 @@
 import {
   Award,
   BadgeCheck,
+  ChevronDown,
   ChevronRight,
   Circle,
   Info,
@@ -533,6 +534,7 @@ function randomExerciseIndex(length: number, previousIndex?: number) {
 
 export default function AuralTrainer() {
   const [grade, setGrade] = useState<Grade>("Grade 3");
+  const [levelsOpen, setLevelsOpen] = useState(true);
   const [exerciseIndex, setExerciseIndex] = useState(0);
   const [points, setPoints] = useState(80);
   const [streak, setStreak] = useState(0);
@@ -829,21 +831,36 @@ export default function AuralTrainer() {
       </section>
 
       <section className="layout">
-        <aside className="gradeRail" aria-label="Grades">
-          {grades.map((item) => (
-            <button
-              className={item === grade ? "gradeButton gradeButton--active" : "gradeButton"}
-              key={item}
-              onClick={() => {
-                setGrade(item);
-                resetFor(item);
-              }}
-            >
-              <span>{item}</span>
-              {item === grade ? <BadgeCheck size={18} /> : <Circle size={12} />}
-            </button>
-          ))}
-        </aside>
+        <div className={levelsOpen ? "levels levels--open" : "levels"}>
+          <button
+            className="levelsToggle"
+            onClick={() => setLevelsOpen((open) => !open)}
+            aria-expanded={levelsOpen}
+            aria-controls="gradeRail"
+          >
+            <span className="levelsToggle__label">
+              <Trophy size={15} /> Levels · {grade}
+            </span>
+            <ChevronDown size={18} className="levelsToggle__chevron" />
+          </button>
+          {levelsOpen ? (
+            <aside className="gradeRail" id="gradeRail" aria-label="Grades">
+              {grades.map((item) => (
+                <button
+                  className={item === grade ? "gradeButton gradeButton--active" : "gradeButton"}
+                  key={item}
+                  onClick={() => {
+                    setGrade(item);
+                    resetFor(item);
+                  }}
+                >
+                  <span>{item}</span>
+                  {item === grade ? <BadgeCheck size={18} /> : <Circle size={12} />}
+                </button>
+              ))}
+            </aside>
+          ) : null}
+        </div>
 
         <section className="trainer">
           <div className="trainer__top">

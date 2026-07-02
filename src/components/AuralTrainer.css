@@ -1,7 +1,12 @@
+/* ================================================================== *
+ * AURAL ARCADE — mobile-first neon stylesheet
+ * Base styles target phones; min-width queries layer up to desktop.
+ * ================================================================== */
+
 .shell {
-  width: min(1420px, calc(100% - 32px));
+  width: min(1420px, calc(100% - 24px));
   margin: 0 auto;
-  padding: 28px 0 56px;
+  padding: 16px 0 40px;
   position: relative;
   z-index: 1;
 }
@@ -10,12 +15,9 @@
  * HERO / MARQUEE
  * ------------------------------------------------------------------ */
 .hero {
-  min-height: 30vh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
-  gap: 28px;
-  align-items: end;
-  padding: 28px 0 20px;
+  gap: 16px;
+  padding: 8px 0 4px;
 }
 
 .hero__copy {
@@ -26,9 +28,9 @@
   font-family: var(--font-display);
   color: var(--bg-0);
   background: linear-gradient(90deg, var(--magenta), var(--orange));
-  padding: 7px 14px 6px;
+  padding: 6px 12px 5px;
   border-radius: 999px;
-  font-size: 0.72rem;
+  font-size: 0.64rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   box-shadow: 0 0 24px rgba(255, 45, 149, 0.5);
@@ -47,10 +49,10 @@
 
 .hero__copy h1 {
   max-width: 900px;
-  margin: 18px 0 0;
+  margin: 12px 0 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.6vw, 4.4rem);
-  line-height: 1.0;
+  font-size: clamp(1.7rem, 7.5vw, 4.4rem);
+  line-height: 1.02;
   letter-spacing: -0.01em;
   color: var(--ink);
   text-shadow:
@@ -59,31 +61,30 @@
 }
 
 /* ------------------------------------------------------------------ *
- * SCOREBOARD (arcade HUD)
+ * SCOREBOARD (arcade HUD) — compact row on mobile
  * ------------------------------------------------------------------ */
 .scoreboard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 18px;
-  background:
-    linear-gradient(180deg, rgba(38, 20, 66, 0.9), rgba(16, 8, 34, 0.92));
+  gap: 8px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(38, 20, 66, 0.9), rgba(16, 8, 34, 0.92));
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 24px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(120, 60, 255, 0.18);
+    0 18px 50px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(120, 60, 255, 0.16);
   animation: riseIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   animation-delay: 80ms;
 }
 
 .scoreboard div:not(.meter) {
-  min-height: 82px;
+  min-height: 62px;
   display: grid;
   align-content: center;
-  gap: 4px;
-  padding: 12px;
+  gap: 2px;
+  padding: 8px 6px;
   text-align: center;
   background: rgba(8, 4, 15, 0.55);
   border: 1px solid var(--line);
@@ -92,15 +93,15 @@
 
 .scoreboard span {
   color: var(--muted);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 .scoreboard strong {
   font-family: var(--font-mono);
-  font-size: 2.2rem;
+  font-size: 1.6rem;
   font-weight: 800;
   line-height: 1;
   color: var(--cyan);
@@ -108,7 +109,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* colour-code the three tiles */
 .scoreboard div:not(.meter):nth-child(1) strong {
   color: var(--yellow);
   text-shadow: 0 0 16px rgba(255, 210, 63, 0.6);
@@ -120,12 +120,11 @@
 
 .meter {
   grid-column: 1 / -1;
-  height: 12px;
+  height: 10px;
   overflow: hidden;
   background: rgba(8, 4, 15, 0.7);
   border: 1px solid var(--line);
   border-radius: 999px;
-  position: relative;
 }
 
 .meter span {
@@ -148,15 +147,15 @@
   z-index: 40;
   display: grid;
   place-items: center;
-  padding: 20px;
-  background: radial-gradient(circle at 50% 40%, rgba(30, 12, 60, 0.6), rgba(6, 3, 12, 0.92));
+  padding: 18px;
+  background: radial-gradient(circle at 50% 40%, rgba(30, 12, 60, 0.6), rgba(6, 3, 12, 0.94));
   backdrop-filter: blur(14px);
   animation: fadeIn 300ms ease both;
 }
 
 .audioGate__panel {
   width: min(100%, 480px);
-  padding: 32px 28px;
+  padding: 28px 22px;
   text-align: center;
   background: linear-gradient(180deg, rgba(38, 20, 66, 0.95), rgba(14, 7, 30, 0.97));
   border: 1px solid var(--line-strong);
@@ -172,18 +171,19 @@
 }
 
 .audioGate__panel h2 {
-  margin: 16px 0 10px;
+  margin: 14px 0 10px;
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4vw, 2.3rem);
-  line-height: 1.05;
+  font-size: clamp(1.5rem, 6vw, 2.3rem);
+  line-height: 1.06;
   color: var(--ink);
   text-shadow: 0 0 24px rgba(38, 230, 255, 0.4);
 }
 
 .audioGate__panel p {
-  margin: 0 auto 24px;
+  margin: 0 auto 22px;
   max-width: 34ch;
   color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .audioGate__button {
@@ -196,18 +196,19 @@
   border: 0;
   border-radius: var(--radius-sm);
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1rem;
   animation: pulseGlow 1.8s ease-in-out infinite;
 }
 
 /* ------------------------------------------------------------------ *
- * LAYOUT
+ * LAYOUT — single column on mobile
  * ------------------------------------------------------------------ */
 .layout {
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr) 290px;
-  gap: 18px;
+  grid-template-columns: 1fr;
+  gap: 14px;
   align-items: start;
+  margin-top: 14px;
 }
 
 .gradeRail,
@@ -221,48 +222,105 @@
   animation: riseIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
-.gradeRail {
-  animation-delay: 140ms;
-}
-.trainer {
-  animation-delay: 200ms;
-}
-.mission {
-  animation-delay: 260ms;
-}
+.gradeRail { animation-delay: 140ms; }
+.trainer { animation-delay: 200ms; }
+.mission { animation-delay: 260ms; }
 
 /* ------------------------------------------------------------------ *
- * GRADE RAIL (level select)
+ * LEVELS — collapsible level-select group
  * ------------------------------------------------------------------ */
-.gradeRail {
+.levels {
   display: grid;
-  gap: 6px;
-  padding: 12px;
-  position: sticky;
-  top: 16px;
+  gap: 8px;
+  animation: riseIn 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: 140ms;
 }
 
-.gradeButton {
-  min-height: 46px;
+.levelsToggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 0 14px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: border-color 150ms ease;
+}
+
+.levelsToggle:hover {
+  border-color: var(--line-strong);
+}
+
+.levelsToggle__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--yellow);
+}
+
+.levelsToggle__chevron {
+  flex: 0 0 auto;
   color: var(--muted);
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  transition: transform 220ms ease;
+}
+
+.levels--open .levelsToggle__chevron {
+  transform: rotate(180deg);
+}
+
+/* ------------------------------------------------------------------ *
+ * GRADE RAIL — horizontal "level select" strip on mobile
+ * ------------------------------------------------------------------ */
+.gradeRail {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gradeRail::-webkit-scrollbar {
+  display: none;
+}
+
+.gradeButton {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
   text-align: left;
   font-weight: 600;
+  white-space: nowrap;
   transition: all 160ms ease;
+}
+
+/* hide the small trailing marker icons in the compact chip strip */
+.gradeButton > svg {
+  display: none;
 }
 
 .gradeButton:hover {
   color: var(--ink);
-  background: var(--panel-2);
-  border-color: var(--line);
-  transform: translateX(3px);
+  border-color: var(--line-strong);
 }
 
 .gradeButton--active {
@@ -274,32 +332,33 @@
 }
 
 .gradeButton--active:hover {
-  transform: none;
   color: var(--bg-0);
 }
 
 /* ------------------------------------------------------------------ *
- * TRAINER (main stage)
+ * TRAINER (main stage) — flex column enables the sticky action deck
  * ------------------------------------------------------------------ */
 .trainer {
-  min-height: 620px;
-  padding: 26px;
+  min-height: 0;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
 }
 
 .trainer__top {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 64px;
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr) 52px;
+  gap: 14px;
   align-items: start;
 }
 
 .tag {
   font-family: var(--font-display);
   color: var(--lime);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  padding: 5px 11px;
+  padding: 5px 10px;
   border: 1px solid rgba(182, 255, 61, 0.4);
   border-radius: 999px;
   background: rgba(182, 255, 61, 0.08);
@@ -307,23 +366,24 @@
 }
 
 .trainer h2 {
-  margin: 14px 0 8px;
+  margin: 12px 0 8px;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.8vw, 2.7rem);
-  line-height: 1.02;
+  font-size: clamp(1.3rem, 5.5vw, 2.7rem);
+  line-height: 1.04;
   color: var(--ink);
+  word-break: break-word;
 }
 
 .trainer p {
   margin: 0;
   color: var(--muted);
-  font-size: 1.04rem;
+  font-size: 0.98rem;
   line-height: 1.5;
 }
 
 .iconButton {
-  width: 64px;
-  height: 64px;
+  width: 52px;
+  height: 52px;
   display: grid;
   place-items: center;
   border: 0;
@@ -351,14 +411,15 @@
 
 .requirement {
   width: 100%;
-  margin: 22px 0;
-  padding: 14px 16px;
+  margin: 18px 0;
+  padding: 13px 14px;
   color: var(--muted);
   background: var(--panel-2);
   border: 1px solid var(--line);
   border-left: 3px solid var(--cyan);
   border-radius: var(--radius-sm);
-  font-size: 0.94rem;
+  font-size: 0.9rem;
+  align-items: flex-start;
 }
 
 .requirement svg {
@@ -371,30 +432,37 @@
  * ------------------------------------------------------------------ */
 .volumeControl {
   display: grid;
-  grid-template-columns: auto minmax(160px, 1fr) 52px;
+  grid-template-columns: auto minmax(0, 1fr) 46px;
   align-items: center;
-  gap: 12px;
-  margin: -4px 0 20px;
+  gap: 10px;
+  margin: 0 0 18px;
   color: var(--muted);
 }
 
 .volumeControl span {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 700;
-  font-size: 0.86rem;
+  font-size: 0.82rem;
+}
+
+.volumeControl span svg {
+  flex: 0 0 auto;
 }
 
 .volumeControl input {
   width: 100%;
+  min-width: 0;
   accent-color: var(--cyan);
+  height: 28px;
 }
 
 .volumeControl strong {
   text-align: right;
   font-family: var(--font-mono);
   color: var(--yellow);
+  font-size: 0.9rem;
 }
 
 .toneControl {
@@ -402,18 +470,21 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin: -4px 0 20px;
+  margin: 0 0 18px;
 }
 
 .toneControl > span {
-  margin-right: 4px;
+  width: 100%;
+  margin-bottom: 2px;
   color: var(--muted);
   font-weight: 700;
-  font-size: 0.86rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .toneButton {
-  min-height: 38px;
+  min-height: 40px;
   padding: 0 14px;
   color: var(--muted);
   background: var(--panel-2);
@@ -445,20 +516,20 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 60px;
-  padding: 0 16px;
-  margin-bottom: 18px;
+  min-height: 58px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
   background: linear-gradient(90deg, rgba(38, 230, 255, 0.12), rgba(255, 45, 149, 0.12));
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
   font-family: var(--font-mono);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   color: var(--ink);
 }
 
 .memoryStrip button {
-  min-height: 38px;
+  min-height: 40px;
   padding: 0 16px;
   color: var(--ink);
   background: var(--panel-2);
@@ -466,6 +537,7 @@
   border-radius: 999px;
   font-family: var(--font-body);
   letter-spacing: 0;
+  flex: 0 0 auto;
 }
 
 /* shared button base */
@@ -473,7 +545,7 @@
 .actions button,
 .notePad button,
 .modeSwitch button {
-  min-height: 46px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -487,32 +559,41 @@
   transition: all 150ms ease;
 }
 
-.notePad button:hover,
-.modeSwitch button:hover,
-.actions button:hover:not(:disabled),
-.tapActions button:hover {
-  border-color: var(--line-strong);
-  transform: translateY(-2px);
+.notePad button:active,
+.modeSwitch button:active,
+.actions button:active:not(:disabled),
+.tapActions button:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) {
+  .notePad button:hover,
+  .modeSwitch button:hover,
+  .actions button:hover:not(:disabled),
+  .tapActions button:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+  }
 }
 
 /* ------------------------------------------------------------------ *
- * CHOICES
+ * CHOICES — single column on mobile
  * ------------------------------------------------------------------ */
 .choices {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 12px;
-  margin: 22px 0;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 18px 0;
 }
 
 .choice {
-  min-height: 74px;
+  min-height: 60px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 12px 14px;
   color: var(--ink);
   background: var(--panel-2);
   border: 1px solid var(--line);
@@ -520,7 +601,6 @@
   text-align: left;
   font-weight: 600;
   transition: all 150ms ease;
-  overflow: visible;
 }
 
 .choice::before {
@@ -534,13 +614,18 @@
   pointer-events: none;
 }
 
-.choice:hover {
-  transform: translateY(-3px);
-  border-color: var(--line-strong);
+.choice:active {
+  transform: scale(0.99);
 }
 
-.choice:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .choice:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+  }
+  .choice:hover::before {
+    opacity: 1;
+  }
 }
 
 .choice--selected {
@@ -561,8 +646,8 @@
   position: relative;
   z-index: 2;
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: inline-grid;
   place-items: center;
   color: var(--bg-0);
@@ -573,14 +658,14 @@
 .optionTooltip,
 .tooltipText {
   position: absolute;
-  width: min(280px, 72vw);
+  width: min(280px, 78vw);
   padding: 11px 13px;
   color: var(--ink);
   background: rgba(10, 5, 20, 0.98);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-family: var(--font-body);
   font-weight: 500;
   line-height: 1.4;
@@ -598,6 +683,7 @@
 }
 
 .choice:hover .optionTooltip,
+.choice:focus-within .optionTooltip,
 .choice:focus-visible .optionTooltip {
   opacity: 1;
   transform: translateY(0);
@@ -609,8 +695,8 @@
 .responseBox,
 .rhythmPad {
   display: grid;
-  gap: 16px;
-  margin: 22px 0;
+  gap: 14px;
+  margin: 18px 0;
 }
 
 .answerHint {
@@ -620,7 +706,7 @@
   color: var(--muted);
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   letter-spacing: 0.1em;
 }
 
@@ -634,24 +720,25 @@
   background: var(--yellow);
   border: 0;
   border-radius: 999px;
+  flex: 0 0 auto;
 }
 
 .tooltipText {
-  left: 50%;
+  left: 0;
   bottom: calc(100% + 10px);
-  transform: translate(-50%, 4px);
+  transform: translateY(4px);
 }
 
 .tooltipIcon:hover .tooltipText,
 .tooltipIcon:focus-visible .tooltipText {
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
 }
 
 .modeSwitch {
-  display: inline-grid;
-  grid-template-columns: repeat(2, minmax(110px, 1fr));
-  width: min(100%, 340px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
   gap: 6px;
   padding: 6px;
   background: rgba(8, 4, 15, 0.5);
@@ -664,7 +751,7 @@
   background: transparent;
   border-radius: 999px;
   color: var(--muted);
-  min-height: 42px;
+  min-height: 44px;
 }
 
 .modeSwitch button.active {
@@ -677,12 +764,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
-  min-height: 78px;
-  padding: 16px;
+  gap: 12px;
+  min-height: 74px;
+  padding: 14px;
   background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
+}
+
+.micPanel .primary {
+  flex: 1 1 auto;
 }
 
 .micPanel > span {
@@ -694,18 +785,18 @@
 
 .notePad {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
   gap: 10px;
 }
 
 .notePad button {
-  min-height: 64px;
+  min-height: 60px;
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
 }
 
-.notePad button:hover {
+.notePad button:active {
   color: var(--bg-0);
   background: var(--lime);
   border-color: transparent;
@@ -715,14 +806,14 @@
  * RHYTHM TAP PAD (the fun centerpiece)
  * ------------------------------------------------------------------ */
 .tapTarget {
-  min-height: 190px;
+  min-height: 160px;
   position: relative;
   color: var(--bg-0);
   background: radial-gradient(circle at 50% 40%, #ffcaa8, var(--orange) 55%, #e0602f);
   border: 0;
   border-radius: var(--radius);
   font-family: var(--font-display);
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   letter-spacing: 0.05em;
   box-shadow:
     0 0 44px rgba(255, 138, 61, 0.5),
@@ -730,6 +821,9 @@
     inset 0 4px 12px rgba(255, 255, 255, 0.3);
   overflow: hidden;
   transition: transform 80ms ease;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .tapTarget::after {
@@ -750,26 +844,41 @@
   transition: opacity 0ms;
 }
 
-.tapActions,
-.actions {
+.tapActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
-.actions {
-  margin-top: 4px;
+.tapActions .primary {
+  flex: 1 1 auto;
 }
 
 /* ------------------------------------------------------------------ *
- * PRIMARY / PLAY / GO-ON BUTTONS
+ * ACTIONS — bold full-width control deck (natural reading order)
  * ------------------------------------------------------------------ */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.actions button {
+  flex: 1 1 auto;
+  min-height: 52px;
+}
+
+.actions .playExample {
+  flex-basis: 100%; /* Play example gets its own full-width row on mobile */
+}
+
 .primary {
   color: var(--bg-0) !important;
   background: linear-gradient(90deg, var(--yellow), var(--orange)) !important;
   border-color: transparent !important;
   font-family: var(--font-display);
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   letter-spacing: 0.02em;
   box-shadow: 0 0 24px rgba(255, 210, 63, 0.4);
 }
@@ -779,12 +888,8 @@
   background: linear-gradient(90deg, var(--cyan), var(--lime));
   border-color: transparent;
   font-family: var(--font-display);
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   box-shadow: 0 0 26px rgba(38, 230, 255, 0.45);
-}
-
-.actions .playExample:hover:not(:disabled) {
-  box-shadow: 0 0 40px rgba(38, 230, 255, 0.7);
 }
 
 .actions .goOnButton {
@@ -792,7 +897,7 @@
   background: linear-gradient(90deg, var(--magenta), #b23bff);
   border-color: transparent;
   font-family: var(--font-display);
-  font-size: 0.86rem;
+  font-size: 0.82rem;
   box-shadow: 0 0 26px rgba(255, 45, 149, 0.5);
   animation: pulseGlow 1.6s ease-in-out infinite;
 }
@@ -802,8 +907,8 @@
  * ------------------------------------------------------------------ */
 .status {
   width: 100%;
-  min-height: 56px;
-  margin-top: 20px;
+  min-height: 54px;
+  margin-top: 18px;
   padding: 14px 16px;
   color: var(--ink);
   background: var(--panel-2);
@@ -811,6 +916,8 @@
   border-left: 3px solid var(--cyan);
   border-radius: var(--radius-sm);
   font-weight: 500;
+  font-size: 0.94rem;
+  align-items: flex-start;
 }
 
 .status svg {
@@ -840,7 +947,6 @@
   color: var(--magenta);
 }
 
-/* full-screen neon burst on a correct answer */
 .status--correct::after {
   content: "";
   position: fixed;
@@ -855,9 +961,7 @@
  * MISSION PANEL
  * ------------------------------------------------------------------ */
 .mission {
-  padding: 20px;
-  position: sticky;
-  top: 16px;
+  padding: 18px;
 }
 
 .mission__header {
@@ -871,24 +975,24 @@
 .mission h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.02em;
 }
 
 .mission ul {
   display: grid;
-  gap: 14px;
-  margin: 18px 0 0;
+  gap: 12px;
+  margin: 16px 0 0;
   padding-left: 0;
   list-style: none;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.45;
 }
 
 .mission li {
   position: relative;
-  padding-left: 26px;
+  padding-left: 24px;
 }
 
 .mission li::before {
@@ -900,50 +1004,29 @@
   font-weight: 900;
 }
 
-/* ------------------------------------------------------------------ *
+/* ================================================================== *
  * KEYFRAMES
- * ------------------------------------------------------------------ */
+ * ================================================================== */
 @keyframes riseIn {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 @keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
-
 @keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 24px rgba(255, 45, 149, 0.45);
-  }
-  50% {
-    box-shadow: 0 0 44px rgba(255, 45, 149, 0.85);
-  }
+  0%, 100% { box-shadow: 0 0 24px rgba(255, 45, 149, 0.45); }
+  50% { box-shadow: 0 0 44px rgba(255, 45, 149, 0.85); }
 }
-
 @keyframes meterFlow {
   from { background-position: 0% 50%; }
   to { background-position: 200% 50%; }
 }
-
 @keyframes flicker {
   0%, 92%, 100% { opacity: 1; }
   93% { opacity: 0.6; }
@@ -951,26 +1034,15 @@
   96% { opacity: 0.75; }
   97% { opacity: 1; }
 }
-
 @keyframes screenFlash {
   from { opacity: 1; }
   to { opacity: 0; }
 }
-
 @keyframes answerCorrect {
-  0% {
-    transform: scale(0.99);
-  }
-  40% {
-    transform: scale(1.015);
-    box-shadow: 0 0 0 8px rgba(182, 255, 61, 0.18);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 rgba(182, 255, 61, 0);
-  }
+  0% { transform: scale(0.99); }
+  40% { transform: scale(1.015); box-shadow: 0 0 0 8px rgba(182, 255, 61, 0.18); }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(182, 255, 61, 0); }
 }
-
 @keyframes answerIncorrect {
   0%, 100% { transform: translateX(0); }
   22% { transform: translateX(-7px); }
@@ -979,80 +1051,133 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__copy,
-  .scoreboard,
-  .gradeRail,
-  .trainer,
-  .mission,
-  .audioGate,
-  .audioGate__panel {
+  .hero__copy, .scoreboard, .gradeRail, .trainer, .mission,
+  .audioGate, .audioGate__panel,
+  .eyebrow, .audioGate__button, .goOnButton, .meter span {
     animation: none;
   }
-  .eyebrow,
-  .audioGate__button,
-  .goOnButton,
-  .meter span {
-    animation: none;
-  }
-  .status--correct,
-  .status--incorrect {
+  .status--correct, .status--incorrect {
     animation: none;
     outline: 3px solid currentColor;
     outline-offset: 3px;
   }
-  .status--correct::after {
-    display: none;
-  }
+  .status--correct::after { display: none; }
 }
 
-/* ------------------------------------------------------------------ *
- * RESPONSIVE
- * ------------------------------------------------------------------ */
-@media (max-width: 1080px) {
-  .hero,
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .gradeRail,
-  .mission {
-    position: static;
-  }
-
-  .gradeRail {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-}
-
-@media (max-width: 620px) {
+/* ================================================================== *
+ * TABLET — min-width 720px
+ * ================================================================== */
+@media (min-width: 720px) {
   .shell {
-    width: min(100% - 20px, 1420px);
-    padding-top: 12px;
+    width: min(1420px, calc(100% - 32px));
+    padding: 24px 0 48px;
   }
 
   .hero {
-    min-height: auto;
-    padding-top: 10px;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: end;
+    gap: 24px;
+    padding: 20px 0 12px;
   }
 
   .scoreboard {
-    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px;
   }
 
-  .scoreboard .meter {
-    grid-column: 1 / -1;
+  .scoreboard div:not(.meter) { min-height: 78px; }
+  .scoreboard strong { font-size: 2rem; }
+  .meter { height: 12px; }
+
+  .choices {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .trainer { padding: 24px; }
+
+  .actions .goOnButton { animation: pulseGlow 1.6s ease-in-out infinite; }
+}
+
+/* ================================================================== *
+ * DESKTOP — min-width 1080px: full three-column arcade cabinet
+ * ================================================================== */
+@media (min-width: 1080px) {
+  .hero {
+    min-height: 26vh;
+    padding: 28px 0 20px;
+  }
+
+  .layout {
+    grid-template-columns: 230px minmax(0, 1fr) 290px;
+    gap: 18px;
+  }
+
+  .levels {
+    position: sticky;
+    top: 16px;
+  }
+
+  /* grade rail returns to a vertical stack */
+  .gradeRail {
+    display: grid;
+    gap: 6px;
+    padding: 12px;
+    overflow: visible;
+  }
+
+  .gradeButton {
+    justify-content: space-between;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .gradeButton > svg {
+    display: block;
+  }
+
+  .gradeButton:hover {
+    background: var(--panel-2);
+    border-color: var(--line);
+    transform: translateX(3px);
+  }
+
+  .gradeButton--active:hover {
+    transform: none;
   }
 
   .trainer {
-    padding: 18px;
+    min-height: 620px;
+    padding: 26px;
   }
 
   .trainer__top {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 64px;
   }
 
   .iconButton {
-    width: 100%;
-    border-radius: var(--radius-sm);
+    width: 64px;
+    height: 64px;
+  }
+
+  /* action deck returns to a compact inline row on desktop */
+  .actions {
+    margin-top: 4px;
+  }
+
+  .actions button { flex: 0 0 auto; }
+  .actions .playExample { flex-basis: auto; }
+
+  .primary, .actions .playExample, .actions .goOnButton { font-size: 0.86rem; }
+
+  .mission {
+    padding: 20px;
+    position: sticky;
+    top: 16px;
+  }
+
+  @media (hover: hover) {
+    .iconButton:hover:not(:disabled) { transform: scale(1.08); }
   }
 }
