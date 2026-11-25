@@ -13,6 +13,9 @@ import "../styles/global.css";
       content="A gamified aural test trainer for rhythm, pitch, intervals, harmony, cadences, and memory work."
     />
     <title>Aural Arcade</title>
+    {import.meta.env.PROD && (
+      <script is:inline defer src="https://analytics.pepperhorn.com/script.js" data-website-id="3970ecd3-80fa-4933-b280-108ccaf2d2bc"></script>
+    )}
   </head>
   <body>
     <AuralTrainer client:load />
